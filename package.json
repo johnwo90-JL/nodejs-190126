@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-190126",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Johnwo90-JL",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "extensionless": "^2.0.6"
+  }
+}
