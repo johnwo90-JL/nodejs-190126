@@ -1,5 +1,6 @@
-import { logMessage } from "./logger.js";
+import { log } from "./logger.js";
+
 
 export {
-    logMessage as log
+    log
 }
