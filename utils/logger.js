@@ -1,40 +1,86 @@
 
-import "./log.io.js"; // Side-effect import
-import { writeToLog } from "./log.io.js";
+import "../providers/file.io.js"; // Side-effect import
+import path from "node:path";
 
-function debug(...msg) {
-    console.log("[DBG]:", ...msg);
+const logsFolder = path.resolve(process.cwd(), "logs");
+
+class Logger {
+    // properties - public
+    count = 0;
+
+    // properties - private
+    #length = 123;
+    #loggingInterface = null;
+
+    /**
+     * @type {{ write, read }}
+     */
+    #fileIOProvider = null;
+    #prefix = "";
+
+
+    // properties - protected
+    _protected = 42;
+
+    /**
+     * Constructor for Logger-class
+     */
+    constructor(
+        prefix = "",
+        loggingInterface = null,
+        fileIOProvider = null,
+    ) {
+        this.#loggingInterface = loggingInterface;
+        this.#fileIOProvider = fileIOProvider;
+        this.#prefix = prefix;
+    }
+
+    log(...msg) {
+        msg.push("\n");
+        this.#loggingInterface.log("[LOG]", ...msg);
+        this.#writeToFile("info", ...msg);
+    }
+
+    info(...msg) {
+        msg.push("\n");
+        this.#loggingInterface.info("[INFO]", ...msg);
+        this.#writeToFile("info", ...msg);
+    }
+
+    debug(...msg) {
+        msg.push("\n");
+        this.#loggingInterface.debug("[DBG]", ...msg);
+        this.#writeToFile("debug", ...msg);
+    }
+
+    warn(...msg) {
+        msg.push("\n");
+        this.#loggingInterface.warn("[WARN]", ...msg);
+        this.#writeToFile("warn", ...msg);
+    }
+
+    error(...msg) {
+        msg.push("\n");
+        this.#loggingInterface.error("[ERROR]", ...msg);
+        this.#writeToFile("error", ...msg);
+    }
+    
+
+    // Private methods
+    #writeToFile(severity, ...msg) {
+        const filePath = this.#getLogFilePath(severity || "info");
+
+        this.#fileIOProvider.write(filePath, ...msg);
+    }
+
+    #getLogFilePath(severity) {
+        const date = new Date();    
+        const month = date.getMonth()+1 < 9 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+
+        return path.resolve(logsFolder, `${(this.#prefix + (this.#prefix ? "-" : "")).toUpperCase()}${date.getFullYear()}${month}${date.getDate()}.${severity}.log`);
+    }
 }
-
-function info(...msg) {
-    console.log("[INFO]:", ...msg);
-}
-
-function warn(...msg) {
-    console.log("[WARN]:", ...msg);
-}
-
-function error(...msg) {
-    console.log("[ERROR]:", ...msg);
-}
-
-const loggerMethods = {
-    debug,
-    info,
-    warn,
-    error
-};
-
-/**
- * @param {`debug`|`info`|`warn`|`error`} severity - Alvorlighetsgrad
- * @param  {...any} args 
- */
-function log(moduleName, severity, ...args) {
-    writeToLog(moduleName, severity, JSON.stringify(args, null, 4));
-    loggerMethods[severity.toLowerCase()](...args);
-}
-
 
 export {
-    log
+    Logger
 };

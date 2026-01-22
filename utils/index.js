@@ -1,6 +1,6 @@
-import { log } from "./logger.js";
+import { logger } from "./logger.js";
 
 
 export {
-    log
+    logger
 }
