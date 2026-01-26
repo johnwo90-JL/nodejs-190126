@@ -30,8 +30,7 @@ function write(path, data) {
     fs.appendFileSync(path, data);
 }
 
-
-export {
+export const fileIOProvider = {
     read,
-    write,
-}
+    write
+};

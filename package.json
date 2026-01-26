@@ -8,9 +8,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon --exec \"node --import=extensionless/register\" index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "extensionless": "^2.0.6"
+  },
+  "dependencies": {
+    "nodemon": "^3.1.11"
   }
 }

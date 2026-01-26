@@ -1,12 +1,10 @@
 import { EventEmitter } from "node:events";
-import { Logger } from "./utils/logger.js";
-import { read, write } from "./providers/file.io.js";
+import { createLogger, Logger } from "./utils/logger.js";
 
 import "./server.js"; // "Side-effect only"-import
 
 
-
-const logger = new Logger("index", console, { read, write: (path, data) => { data = `${new Date().toISOString()} - ${data}\n`; write(path, data) } });
+const logger = createLogger();
 
 class MyEmitter extends EventEmitter { 
     constructor() {
