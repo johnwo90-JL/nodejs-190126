@@ -1,12 +1,32 @@
 // import http from "node:http";
 
-import express from "express";
+import express, { response } from "express";
+import { createLogger } from "./utils/logger";
 
 const app = express();
 
 const PORT = 3000;
 const HOST = "127.0.0.1"; // "localhost", "0.0.0.0"
 
+const logger = createLogger();
+
+// .use -> catch-all for metoder, for path "/"
+app.use("/", (request, response) => {
+    console.log(request.baseUrl);
+
+    response.sendStatus(200); // 200 OK
+});
+
+app.listen(PORT, HOST, (err) => {
+    if (err) {
+        throw new Error(err);
+    }
+
+    logger.log()
+});
+
+// `${protocol}://${ip}:${port}/${path}`
+// app.use("/") -> http://localhost:3000/
 
 
 

@@ -45,35 +45,35 @@ class Logger {
     log(...msg) {
         msg.push("\n");
         this.#loggingInterface.log("[LOG]", ...msg);
-        this.#writeToFile("info", this.logLine(...msg));
+        this.#writeToFile("info", this.#logLine(...msg));
     }
 
     info(...msg) {
         msg.push("\n");
         this.#loggingInterface.info("[INFO]", ...msg);
-        this.#writeToFile("info", this.logLine(...msg));
+        this.#writeToFile("info", this.#logLine(...msg));
     }
 
     debug(...msg) {
         msg.push("\n");
         this.#loggingInterface.debug("[DBG]", ...msg);
-        this.#writeToFile("debug", this.logLine(...msg));
+        this.#writeToFile("debug", this.#logLine(...msg));
     }
 
     warn(...msg) {
         msg.push("\n");
         this.#loggingInterface.warn("[WARN]", ...msg);
-        this.#writeToFile("warn", this.logLine(...msg));
+        this.#writeToFile("warn", this.#logLine(...msg));
     }
 
     error(...msg) {
         msg.push("\n");
         this.#loggingInterface.error("[ERROR]", ...msg);
-        this.#writeToFile("error", this.logLine(...msg));
+        this.#writeToFile("error", this.#logLine(...msg));
     }
 
 
-    logLine(...msg) {
+    #logLine(...msg) {
         return this.#logLineFormat.replace("$DateTime", new Date().toISOString())
             .replace("$Method", "???")
             .replace("$Path", "???")

@@ -1,5 +1,5 @@
 import { EventEmitter } from "node:events";
-import { createLogger, Logger } from "./utils/logger.js";
+import { createLogger, Logger } from "./utils/logger";
 
 import "./server.js"; // "Side-effect only"-import
 
@@ -22,8 +22,8 @@ class MyEmitter extends EventEmitter {
 
 
 // Utløse hendelse
-setTimeout(() => logger.log("This is a message, 1"), 1000); 
-setTimeout(() => logger.log("This is a message, 2"), 2000); 
-setTimeout(() => logger.log("This is a message, 3"), 3000); 
+// setTimeout(() => logger.log("This is a message, 1"), 1000); 
+// setTimeout(() => logger.log("This is a message, 2"), 2000); 
+// setTimeout(() => logger.log("This is a message, 3"), 3000); 
 
 
