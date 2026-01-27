@@ -2,7 +2,7 @@
 import "../providers/file.io.js"; // Side-effect import
 import path from "node:path";
 import { fileIOProvider } from "../providers/file.io.js";
-import { getMyCaller } from "./getCaller.js";
+import { getMyCaller } from "./get-caller.js";
 
 const logsFolder = path.resolve(process.cwd(), "logs");
 
