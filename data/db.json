@@ -1,0 +1,9 @@
+{
+    "users": {
+        "ea108a5b-e476-4597-ad6e-e5cbd04ad850": {
+            "name": "Alice",
+            "email": "foo@bar.com",
+            "password": "abc123"
+        }
+    }
+}

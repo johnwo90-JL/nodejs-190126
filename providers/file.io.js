@@ -20,14 +20,19 @@ function read(path) {
  * @param {any} data 
  * @returns 
  */
-function write(path, data) {
+function write(path, data, append = true) {
     if (!fs.existsSync(path)) {
         console.info(path,"doesn't exist, creating!");
         fs.writeFileSync(path, data);
         return;
     }
 
-    fs.appendFileSync(path, data);
+    if (append) {
+        fs.appendFileSync(path, data);
+        return;
+    }
+
+    fs.writeFileSync(path, data);
 }
 
 export const fileIOProvider = {

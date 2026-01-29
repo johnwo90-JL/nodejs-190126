@@ -1,6 +1,8 @@
 import { Router, static as expressStatic } from "express";
 import { useRequestId } from "../middleware/use-request-id.middleware";
 import { usersRoutes } from "./users.routes";
+import { authRoutes } from "./auth.routes";
+
 
 const rootRouter = Router(); 
 
@@ -14,7 +16,8 @@ rootRouter.get("/", useRequestId, (req, res) => {
 });
 
 // Ta i bruk "usersRoutes" samlingen med endepunkter.
-rootRouter.use("/api", usersRoutes); 
+rootRouter.use("/users", usersRoutes);
+rootRouter.use("/auth", (_,__,next) =>{console.log("/auth"); next()}, authRoutes);
 
 // Håndter alle andre forespørsler – Gi 404 satus
 rootRouter.use((req, res) => {
