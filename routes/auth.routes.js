@@ -33,7 +33,7 @@ authRouter.post("/login", (req, res) => {
     }
 
     if (user === null) {
-        res.sendStatus(421);
+        res.sendStatus(404);
         return;
     }
 
