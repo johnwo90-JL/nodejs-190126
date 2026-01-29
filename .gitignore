@@ -1,3 +1,4 @@
 /NOTES*
 /logs
 node_modules
+.env

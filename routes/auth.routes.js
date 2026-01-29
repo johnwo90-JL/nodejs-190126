@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { useRequestId } from "../middleware/use-request-id.middleware";
 import { get } from "../providers/json-storage.provider";
 
 const authRouter = Router(); 
 
-// authRouter.use(useRequestId);
 
 // POST /login 
 authRouter.post("/login", (req, res) => {
@@ -14,11 +12,15 @@ authRouter.post("/login", (req, res) => {
             "password": "abc123"
         }
     */
-   console.log("/login");
+   console.log("X-Request-Id", req.headers["X-Request-Id"]);
+    console.log("/login");
 
     console.log(req.body);
 
     const { email, password } = req.body;
+
+    console.log("E-mail:", email);
+    console.log("Password:", password);
 
     const userData = get("users");
     let user = null;
@@ -37,8 +39,12 @@ authRouter.post("/login", (req, res) => {
         return;
     }
 
-    res.sendStatus(500);
+    if (user.password !== password) {
+        res.sendStatus(401);
+        return;
+    }
 
+    res.sendStatus(204);
 });
 
 export { authRouter as authRoutes }

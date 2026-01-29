@@ -1,7 +1,6 @@
 import express, { json } from "express";
 import { createLogger } from "./utils/logger";
-
-import { authRoutes } from "./routes/auth.routes";
+import { rootRouter } from "./routes/root.routes";
 
 const app = express();
 
@@ -11,8 +10,7 @@ const HOST = "127.0.0.1"; // "localhost", "0.0.0.0"
 const logger = createLogger();
 
 app.use(json());
-// app.use(rootRouter);
-app.use("/auth", authRoutes);
+app.use(rootRouter);
 
 // Lytt på port "PORT"
 app.listen(PORT, HOST, (err) => {
