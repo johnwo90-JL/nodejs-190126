@@ -20,7 +20,11 @@ export function set(section, key, subkeyValue) {
         throw new Error("Error reading from JSON-DB.", { cause: 500 });
     }
 
-    data[section][key][subkeyValue.split("=")[0]] = subkeyValue.split("=")[1];
+    if (data[section] === undefined) data[section] = {};
+    if (data[section][key] === undefined) data[section][key] = {};
+
+    const roles = subkeyValue.split("=")[0] === "roles" ? JSON.parse(subkeyValue.split("=")[1]) : null;
+    data[section][key][subkeyValue.split("=")[0]] = roles===null ? subkeyValue.split("=")[1] : roles;
 
     fileIOProvider.write(jsonDB, JSON.stringify(data, null, 4), false);
     

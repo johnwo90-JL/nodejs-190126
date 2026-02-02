@@ -3,7 +3,44 @@
         "ea108a5b-e476-4597-ad6e-e5cbd04ad850": {
             "name": "Alice",
             "email": "foo@bar.com",
-            "password": "abc123"
+            "password": "abc123",
+            "roles": [
+                "admin",
+                "user"
+            ]
+        },
+        "ea108a5b-e476-4597-ad6e-e5cbd04ad851": {
+            "name": "Bob",
+            "email": "baz@bar.com",
+            "password": "abc123",
+            "roles": [
+                "user"
+            ]
+        },
+        "dca20a13-9469-434f-a917-a65b8674e627": {
+            "name": "Joe",
+            "email": "qui@bar.com",
+            "password": "abc123",
+            "roles": [
+                "admin",
+                "user"
+            ]
+        },
+        "827baae3-b15d-4cd4-8267-20cfbe9eedd4": {
+            "name": "Steve",
+            "email": "steve@bar.com",
+            "password": "abc123",
+            "roles": [
+                "user"
+            ]
+        },
+        "70ce4249-991b-4b2a-b330-74360f5f9f6b": {
+            "name": "Thor",
+            "email": "thor@bar.com",
+            "password": "abc123",
+            "roles": [
+                "user"
+            ]
         }
     }
 }

@@ -1,13 +1,15 @@
+import path from "node:path";
+
 import { Router, static as expressStatic } from "express";
 import { useRequestId } from "../middleware/use-request-id.middleware";
 import { usersRoutes } from "./users.routes";
 import { authRoutes } from "./auth.routes";
-import { useAuth } from "../middleware/use-auth.middleware copy";
+import { useAuth } from "../middleware/use-auth.middleware";
 
 
 const rootRouter = Router(); 
 rootRouter.use(useRequestId);
-rootRouter.use(useAuth("admin"));
+// rootRouter.use(useAuth("admin"));
 
 // express.static "binder" mappen til endepunktet
 rootRouter.use("/", expressStatic("public"));

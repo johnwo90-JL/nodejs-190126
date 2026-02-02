@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { get } from "../providers/json-storage.provider";
+import { generateToken } from "../providers/jwt.provider";
 
 const authRouter = Router(); 
 
@@ -31,6 +32,7 @@ authRouter.post("/login", (req, res) => {
         }
 
         user = userData[key];
+        user.id = key;
         break;
     }
 
@@ -44,7 +46,12 @@ authRouter.post("/login", (req, res) => {
         return;
     }
 
-    res.sendStatus(204);
+    delete user.password;
+
+    const accessToken = generateToken(user, "3h");
+    const refreshToken = generateToken({ id: user.id }, "3d");
+
+    res.json({ accessToken, refreshToken });
 });
 
 export { authRouter as authRoutes }
