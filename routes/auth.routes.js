@@ -48,8 +48,8 @@ authRouter.post("/login", (req, res) => {
 
     delete user.password;
 
-    const accessToken = generateToken(user, "3h");
-    const refreshToken = generateToken({ id: user.id }, "3d");
+    const accessToken = generateToken(user, "access");
+    const refreshToken = generateToken({ id: user.id }, "refresh");
 
     res.json({ accessToken, refreshToken });
 });

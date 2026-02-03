@@ -9,15 +9,19 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --exec \"node --import=extensionless/register\" index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:seed": "node --import=extensionless/register ./seeds/seed.js"
   },
   "devDependencies": {
-    "extensionless": "^2.0.6"
+    "extensionless": "^2.0.6",
+    "sqlite3": "^5.1.7"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "sequelize": "^6.37.7"
   }
 }
