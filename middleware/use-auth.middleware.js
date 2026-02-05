@@ -6,11 +6,13 @@ export const useAuth = (...roles) => (req, res, next) => {
         const token = req.headers["authorization"];
         
         const decoded = jwt.decode(token.split(" ")[1]);
+        console.log("Decoded:", decoded);
+    
         decoded.roles = [ ...decoded.roles, "self" ];
         console.log("verify?", jwt.verify(token.split(" ")[1], process.env.JWT_SECRET));
 
         if (!decoded.roles.includes(roles[0])) {
-            console.log(`!!! Does not have role in "${JSON.stringify(roles)}"`)
+            console.log(`!!! Does not have role in "${JSON.stringify(roles)}", comparing against ${roles[0]}`)
 
             if (!decoded.roles.includes(roles.includes("self") ? "self" : "__restricted__")) {
                 console.log(`403: Does not have role in "${JSON.stringify(roles)}", and "self" is not relevant`);

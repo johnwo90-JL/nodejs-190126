@@ -21,3 +21,6 @@ app.listen(PORT, HOST, (err) => {
     logger.log("Server listening on port:",PORT);
     logger.log("Server available at:",`http://${HOST}:${PORT}/`);
 });
+
+
+export default app;
