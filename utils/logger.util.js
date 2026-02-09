@@ -1,8 +1,8 @@
 
-import "../providers/file.io.js"; // Side-effect import
+import "../providers/file-io.provider.js"; // Side-effect import
 import path from "node:path";
-import { fileIOProvider } from "../providers/file.io.js";
-import { getMyCaller } from "./get-caller.js";
+import { fileIOProvider } from "../providers/file-io.provider.js";
+import { getMyCaller } from "./get-caller.util.js";
 
 const logsFolder = path.resolve(process.cwd(), "logs");
 
@@ -36,7 +36,6 @@ class Logger {
         loggingInterface = null,
         ioProvider = null,
     ) {
-        console.log("Logger initialized with:", {prefix});
         this.#loggingInterface = loggingInterface;
         this.#fileIOProvider = ioProvider;
         this.#prefix = prefix;

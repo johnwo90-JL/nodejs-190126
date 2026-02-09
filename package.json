@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --exec \"node --import=extensionless/register\" index.js",
-    "test": "vitest run --no-file-parallelism --silent",
+    "test": "NODE_ENV=test vitest run --no-file-parallelism --silent",
     "db:seed": "node --import=extensionless/register ./seeds/seed.js"
   },
   "devDependencies": {

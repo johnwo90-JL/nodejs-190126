@@ -22,7 +22,6 @@ function read(path) {
  */
 function write(path, data, append = true) {
     if (!fs.existsSync(path)) {
-        console.info(path,"doesn't exist, creating!");
         fs.writeFileSync(path, data);
         return;
     }

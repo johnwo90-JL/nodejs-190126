@@ -8,3 +8,10 @@ export const GetLogin = z.object({
         password: z.string(),
     })
 });
+
+// POST /refresh
+export const RefreshToken = z.object({
+    body: z.object({
+        refreshToken: z.string().min(1),
+    })
+});

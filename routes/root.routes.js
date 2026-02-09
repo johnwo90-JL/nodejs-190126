@@ -16,7 +16,6 @@ rootRouter.use("/", expressStatic("public"));
 
 // "post" korresponderer til HTTP metoden "POST".
 rootRouter.get("/", (req, res) => {
-    console.log(req.headers["X-Request-Id"]);
     res.sendStatus(201);
 });
 

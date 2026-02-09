@@ -1,5 +1,8 @@
-import { fileIOProvider } from "./file.io";
+import { fileIOProvider } from "./file-io.provider";
 import path from "node:path";
+import { createLogger } from "../utils/logger.util";
+
+const logger = createLogger();
 
 const jsonDB = path.resolve(process.cwd(), "data", "db.json");
 
@@ -10,8 +13,7 @@ export function set(section, key, subkeyValue) {
         try {
             return JSON.parse(fileIOProvider.read(jsonDB));
         } catch (err) {
-            console.log(err);
-            // TODO use Logger
+            logger.error(err);
             return null;
         }
     })();
@@ -27,7 +29,7 @@ export function set(section, key, subkeyValue) {
     data[section][key][subkeyValue.split("=")[0]] = roles===null ? subkeyValue.split("=")[1] : roles;
 
     fileIOProvider.write(jsonDB, JSON.stringify(data, null, 4), false);
-    
+
     return data[section][key][subkeyValue.split("=")[0]];
 }
 
@@ -36,8 +38,7 @@ export function get(key) {
         try {
             return JSON.parse(fileIOProvider.read(jsonDB));
         } catch (err) {
-            console.log(err);
-            // TODO use Logger
+            logger.error(err);
             return null;
         }
     })();

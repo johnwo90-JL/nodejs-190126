@@ -1,5 +1,5 @@
 import { ZodSchema } from "zod/v3";
-import { createLogger } from "../utils/logger";
+import { createLogger } from "../utils/logger.util";
 
 const logger = createLogger();
 

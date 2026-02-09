@@ -1,5 +1,5 @@
 import { sequelize } from "../config/db.config";
-import { createLogger } from "../utils/logger";
+import { createLogger } from "../utils/logger.util";
 
 const logger = createLogger();
 
