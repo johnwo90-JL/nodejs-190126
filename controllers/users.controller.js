@@ -1,4 +1,7 @@
 import { User } from "../models/user.model";
+import { createLogger } from "../utils/logger.util";
+
+const logger = createLogger();
 
 export async function getAll(req, res) {
     res.json(await User.findAll({
@@ -27,7 +30,22 @@ export async function getById(req, res) {
 
 export async function create(req, res) {
     const newUser = req.body;
-    await User.create(newUser);
+    try {
+        await User.create(newUser)
+    } catch (err) {
+            logger.error(err);
+            console.log(JSON.stringify(err, null, 4));
+
+            switch (err.name) {
+                case "SequelizeUniqueConstraintError":
+                    res.sendStatus(409);
+                    return;
+                default:
+                    res.sendStatus(500);
+                    return;
+            }
+
+        }
 
     res.sendStatus(201);
 }

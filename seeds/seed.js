@@ -1,6 +1,7 @@
 import { User } from "../models/user.model";
 import { createLogger } from "../utils/logger.util";
 import { syncDatabase } from "../providers/db.provider";
+import { RefreshToken } from "../models/refreshToken.model";
 
 const logger = createLogger();
 
@@ -21,4 +22,11 @@ syncDatabase()
             }).catch(err => logger.error("Failed to add user! Error:", err));
             logger.info("Added user:", JSON.stringify(res, null, 4));
         }
+
+
+        const newToken = await RefreshToken.create({
+            token: "ExampleToken"
+        });
+        await newToken.destroy();
+        
     });
