@@ -7,5 +7,7 @@ const authRouter = Router();
 
 authRouter.post("/login", useValidate(GetLogin), authController.login);
 authRouter.post("/refresh", useValidate(RefreshToken), authController.refresh);
+authRouter.get("/logout", authController.logout);
+authRouter.post("/logout", authController.logout);
 
 export { authRouter as authRoutes };

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import request from "supertest";
 import app from "../../index.js";
 
-async function getAuthToken() {
+async function getAuthTokens() {
     return (await request(app).post("/auth/login").send({
         email: "thor@bar.com",
         password: "foobar",
@@ -13,7 +13,7 @@ let refreshToken = null;
 
 describe("`/auth`-collection", () => {
     beforeAll(async () => {
-        const tokens = await getAuthToken();
+        const tokens = await getAuthTokens();
         refreshToken = tokens.refreshToken;
     })
 
@@ -66,5 +66,38 @@ describe("`/auth`-collection", () => {
             .send({ email: "nonexistent@bar.com", password: "foobar" });
 
         expect(response.status).toBe(401);
+    });
+
+
+    it("POST /auth/logout - should return 204 and invalidate refresh token", async () => {
+        const tokens = await getAuthTokens();
+
+        const logoutResponse = await request(app)
+            .post("/auth/logout")
+            .send({ refreshToken: tokens.refreshToken });
+
+        expect(logoutResponse.status).toBe(204);
+
+        const refreshResponse = await request(app)
+            .post("/auth/refresh")
+            .send({ refreshToken: tokens.refreshToken });
+
+        expect(refreshResponse.status).toBe(401);
+    });
+
+
+    it("GET /auth/logout - should return 204 and invalidate refresh token", async () => {
+        const tokens = await getAuthTokens();
+
+        const logoutResponse = await request(app)
+            .get(`/auth/logout?refreshToken=${encodeURIComponent(tokens.refreshToken)}`);
+
+        expect(logoutResponse.status).toBe(204);
+
+        const refreshResponse = await request(app)
+            .post("/auth/refresh")
+            .send({ refreshToken: tokens.refreshToken });
+
+        expect(refreshResponse.status).toBe(401);
     });
 });

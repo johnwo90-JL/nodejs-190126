@@ -5,6 +5,27 @@ import { createLogger } from "../utils/logger.util";
 
 const logger = createLogger();
 
+function getRefreshTokenFromRequest(req) {
+    if (req.body && typeof req.body.refreshToken === "string" && req.body.refreshToken.trim().length > 0) {
+        return req.body.refreshToken.trim();
+    }
+
+    if (req.query && typeof req.query.refreshToken === "string" && req.query.refreshToken.trim().length > 0) {
+        return req.query.refreshToken.trim();
+    }
+
+    const authHeader = req.headers.authorization;
+    if (typeof authHeader === "string" && authHeader.startsWith("Bearer ")) {
+        const token = authHeader.slice("Bearer ".length).trim();
+
+        if (token.length > 0) {
+            return token;
+        }
+    }
+
+    return null;
+}
+
 export async function login(req, res) {
     const { email, password } = req.body;
 
@@ -102,5 +123,27 @@ export async function refresh(req, res) {
         res.json({ accessToken, refreshToken: newRefreshToken });
     } catch (err) {
         res.sendStatus(401);
+    }
+}
+
+export async function logout(req, res) {
+    const refreshToken = getRefreshTokenFromRequest(req);
+
+    if (!refreshToken) {
+        res.sendStatus(204);
+        return;
+    }
+
+    try {
+        await RefreshToken.destroy({
+            where: {
+                token: refreshToken
+            }
+        });
+
+        res.sendStatus(204);
+    } catch (err) {
+        logger.error("Logout failed:", err.message);
+        res.sendStatus(500);
     }
 }

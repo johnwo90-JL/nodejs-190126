@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth + WebSocket Client</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="ambient"></div>
+    <main class="layout">
+        <section class="panel hero">
+            <p class="eyebrow">Node API Playground</p>
+            <h1>Auth + WebSocket</h1>
+            <p class="subtle">Login, refresh and logout tokens, then connect to <code>/ws</code>.</p>
+            <label class="field">
+                <span>API base URL</span>
+                <input id="api-base" type="url" value="" placeholder="http://127.0.0.1:3000">
+            </label>
+        </section>
+
+        <section class="panel">
+            <h2>Authentication</h2>
+            <form id="login-form" class="form-grid">
+                <label class="field">
+                    <span>Email</span>
+                    <input id="email" type="email" autocomplete="username" required value="thor@bar.com">
+                </label>
+                <label class="field">
+                    <span>Password</span>
+                    <input id="password" type="password" autocomplete="current-password" required value="foobar">
+                </label>
+                <button type="submit" class="btn btn-primary">POST /auth/login</button>
+            </form>
+            <div class="row">
+                <button id="refresh-btn" class="btn">POST /auth/refresh</button>
+                <button id="logout-post-btn" class="btn">POST /auth/logout</button>
+                <button id="logout-get-btn" class="btn">GET /auth/logout</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Tokens</h2>
+            <div class="token-grid">
+                <label class="field">
+                    <span>Access token</span>
+                    <textarea id="access-token" rows="6" readonly></textarea>
+                </label>
+                <label class="field">
+                    <span>Refresh token</span>
+                    <textarea id="refresh-token" rows="6" readonly></textarea>
+                </label>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>WebSocket</h2>
+            <div class="row row-space">
+                <span id="ws-status" class="badge">Disconnected</span>
+                <label class="checkbox">
+                    <input id="use-access-token" type="checkbox" checked>
+                    Send access token as <code>?token=...</code>
+                </label>
+            </div>
+            <div class="row">
+                <button id="ws-connect-btn" class="btn">Connect</button>
+                <button id="ws-disconnect-btn" class="btn">Disconnect</button>
+            </div>
+            <div class="row">
+                <input id="ws-message" type="text" placeholder="Write a message...">
+                <button id="ws-send-btn" class="btn btn-primary">Send</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Events</h2>
+            <pre id="event-log" class="log"></pre>
+        </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+</body>
+</html>
