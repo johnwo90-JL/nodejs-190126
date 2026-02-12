@@ -5,7 +5,16 @@ const logger = createLogger();
 
 export const useAuth = (...roles) => (req, res, next) => {
     try {
-        const token = req.headers["authorization"];
+        const token = req.headers["authorization"] ?? null;
+        
+        //TODO: Add tests for `token`.
+        if (
+            token === null || (typeof token === "string" && !token.startsWith("Bearer "))
+        ) {
+            logger.error("No valid token in header.");
+            res.sendStatus(400);
+            return;
+        }
 
         const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
 

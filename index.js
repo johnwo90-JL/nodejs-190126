@@ -6,7 +6,12 @@ import { createLogger } from "./utils/logger.util.js";
 
 if (process.env.NODE_ENV !== "test") {
     const logger = createLogger();
+    logger.logLevel = "warn";
     const server = createServer(app);
+    logger.debug("Debug-level logging!");
+    logger.info("Info-level logging!");
+    logger.warn("Warn-level logging!");
+    logger.error("Error-level logging!");
 
     createWebSocketServer(server);
 
